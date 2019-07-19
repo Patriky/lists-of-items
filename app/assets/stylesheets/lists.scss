@@ -1,0 +1,30 @@
+
+
+
+#left {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 43%;
+    height:300px;
+    margin: 2%;/*Margen superior com 1 pixel*/
+    float: left;/*propriedade indicando que a Área flutuará a esquerda*/
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.473)/* coloca uma leve sombra escuta */
+}
+
+
+#right {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 44%;
+    height:300px;
+    margin: 2%;/*Margen superior com 1 pixel*/
+    float: right;/*propriedade indicando que a Área flutuará a esquerda*/
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.473)/* coloca uma leve sombra escuta */
+}
+
+#div-bt {
+	padding: 20px;
+
+}
