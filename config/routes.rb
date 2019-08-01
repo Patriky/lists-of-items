@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 	get "lists/new" => "lists#new"
 	post "lists" => "lists#create"
 
-	post "items" => "item#create" 
+	get 'items/:id' => "item#showItemsSelected"
+	post "items" => "item#create"
+
 end

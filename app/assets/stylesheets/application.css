@@ -23,5 +23,7 @@ body {
     margin: auto; /*zero de margen e centralizado automativamente*/
     width: 100%; /*Largura ocupando 90% da área total da tela em que a página será exibida*/
     background-color: lightblue; /*Cor de fundo azul claro*/
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.473)/* coloca uma leve sombra escuta */
+    border-radius: 10px;
 }
 

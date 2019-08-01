@@ -1,5 +1,5 @@
 
-<div>
+<div data-controller= "listController">
 	
 <section id="left">
     <div>
@@ -8,57 +8,29 @@
 			<%= l.submit 'Save' %>
 		<% end %>
     </div>
+
     <br>
-    <div>
-        <select name="sl-list" id="sl-list" size="10">
+    <div id="divSelect" >
+        <select name="lista" id="lista" size="25"  >
         	<% if @lists.length == 0 %>
         		<option>Vazio...</option>
         	<% else %>
             	<% @lists.each do |lis| %>
-	            	<option>
-	            		<%= lis.name %>
-	            	</option>
-	            <% end -%>
+	            	<option data-action="click->listController#selectList" data-list-id="<%= lis._id %>" > <%= lis.name %> </option>
+	            <% end %>
         	<% end %>
         </select>
     </div>
-</section>
-
-<section id="right">
     <div>
-		<%= form_for @item, :url => {:controller => "item", :action => "create"} do |i| %>
-			Create item: <%= i.text_field :name %>
-			List: <%= i.collection_select(:list_id, List.all, :id, :name)%>
-			<%= i.submit 'Save' %>
-		<% end %>
+        <input placeholder="Create any item" data-target="listController.newItem" type="text">
+        <button data-action="click->listController#createItem">Save</button>
     </div>
+
 <br>
-    <div>
-         <select name="sl-list" id="sl-list" size="10">
-        	<% if @items.length == 0 %>
-        		<option>Vazio...</option>
-        	<% else %>
-            	<% @items.each do |it| %>
-	            	<option>
-	            		<% if it.list %>
-		            		<%= it.name + " --- " + it.list.name  %> 
-	            		<% else %>
-	            			<%= it.name %>
-	            		<% end %>
-	            	</option>
-	            <% end -%>
-        	<% end %>
-        </select>   	
+    <div data-target="listController.results">
+        <p>Nenhum item selecionado...</p>
     </div>
+
 </section>
-	
-</div>
 
-
-
-
-<div id="div-bt">
-	<input type="string">
-	<input type="button" name="tes" value="Filter by list">
-	<button>Show all items</button>	
 </div>
