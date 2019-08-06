@@ -21,7 +21,7 @@ class ListsController < ApplicationController
 		    format.html { redirect_to action: "index" }
 		    #format.json { render :show, status: :created, location: @list }
 		  else
-		    format.html { render :new }
+		    format.html { redirect_to action: "index" }
 		    format.json { render json: @list.errors, status: :unprocessable_entity }
 		  end
 		end

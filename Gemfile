@@ -61,3 +61,5 @@ gem 'jquery-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'mongoid', '~> 6.1.0'
+
+gem 'bootstrap-sass'

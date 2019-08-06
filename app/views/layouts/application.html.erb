@@ -4,17 +4,28 @@
     <title>ListTask</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-    <div id="cabecalho", align="center" >
-      Header
-    </div>
-
   <body>
+<header class="navbar navbar-fixed-top navbar-light" id="navbar">
+  <div >
+    <div class="col-sm-2">
+      <ul class="nav navbar-nav navbar-left">
+        <li><%= link_to "Home", '#' %></li>
+      </ul>
+    </div>
+    <nav class="col-sm-10">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Login", '#' %></li>
+      </ul>
+    </nav>
+  </div>
+</header>
     <%= yield %>
 
   </body>
