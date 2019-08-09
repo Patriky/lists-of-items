@@ -6,45 +6,57 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-2">
-            
+        <div class="col-sm-1">
         </div>
         <div class="col-sm-3">
         	<%= form_for @list do |l| %>
-                <div class="input-group mb-3">
-            		<%= l.text_field :name, placeholder: "Create any list", type: "text", class: "form-control", style: "width: 200px"%>
-                	<%= l.submit 'Save', class: 'btn btn-success' %>
+                <div class="input-group mb-3" id= "divNewList">
+            		<%= l.text_field :name, placeholder: "Create any list", type: "text", class: "form-control"%>
+                    <span class="input-group-btn">
+                	   <%= l.submit 'Salvar', class: 'btn btn-success' %>
+                    </span>
                 </div>
         	<% end %>
+            <div class="input-group input-group-sm mb-3" id="divEditList" style="display: none;">
+                <input class="form-control" data-target="listController.inputListName" type="text">
+                <input class="form-control" data-target="listController.inputListId" type="hidden">
+                <span class="input-group-btn">
+                    <button class="btn btn-danger btn-sm" data-action=listController#showDivTableSelect>Cancelar</button>
+                    <button class="btn btn-success btn-sm" data-action=listController#saveListEdited>Salvar</button>
+                </span>
+                
+            </div>
+
+
         </div>
 
-        <div class="col-sm-5">
+        <div class="col-sm-8">
             <div class="input-group mb-3">
-                <input class="form-control" placeholder="Create any item" data-target="listController.newItem" type="text">
+                <input class="form-control" name="inputNewItem" placeholder="Create any item" data-target="listController.inputNewItemName" type="text">
                 <span class="input-group-btn">
-                    <button class="btn btn-success" data-action="click->listController#createItem">Save</button>
+                    <button class="btn btn-success" data-action="click->listController#createItem">Salvar</button>
                 </span>
             </div>
         </div>
 
     </div>
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             
         </div>
         <div class="col-sm-3">
-            <select class="form-control" name="lista" id="lista" size="20">
+            <select class="form-control" name="selectList" id="selectList" size="20">
                 <% if @lists.length == 0 %>
                     <option>Vazio...</option>
                 <% else %>
                     <% @lists.each do |lis| %>
-                        <option data-action="click->listController#selectList" data-list-id="<%= lis._id %>" > <%= lis.name %> </option>
+                        <option name="optionList" data-action="click->listController#showAllItems dblclick->listController#editListSelected" data-list-id="<%= lis._id %>" > <%= lis.name %> </option>
                     <% end %>
                 <% end %>
             </select>            
         </div>
         <br>
-        <div class="col-sm-5" >
+        <div class="col-sm-8" >
             <table class="table">
                 <thead>
                     <tr>
@@ -60,24 +72,53 @@
         </div>
     </div>
 
-  <div class="modal fade" id="ModalEditItem" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+
+
+
+<!-- Modal para editar um item -->
+  <div class="modal fade" id="modalEditItem" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="TituloModalLongoExemplo">Editar Item</h5>
+          <h5 class="modal-title" >Editar Item</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <input class="form-control" placeholder="Edit item" data-target="listController.newItem" type="text">
+
+        <div data-target="listController.modalAlerts" >
+        </div>
+
+            <input class="form-control" data-target="listController.inputItemName" type="text">
+            <input class="form-control" type="hidden" data-target="listController.inputItemId">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Salvar mudanças</button>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
+          <button type="button" data-action="click->listController#saveItemEdited" class="btn btn-success btn-sm">Salvar mudanças</button>
         </div>
       </div>
     </div>
   </div>
+
+<!-- Modal para DELETAR um item -->
+  <div class="modal fade" id="modalDeleteItem" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Deletar Item?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+            <input class="form-control" type="hidden" data-target="listController.inputItemId">
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
+            <button type="button" data-action="click->listController#deleteItem" class="btn btn-success btn-sm">Deletar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </div>
