@@ -46,8 +46,8 @@ export default class extends Controller {
 			} else {
 				this.resultsTarget.innerHTML = "<p>Vazio... </p>"
 			}
-		});
 
+		});
 	}
 
 	editListSelected(event){
@@ -65,7 +65,9 @@ export default class extends Controller {
 				$("#tableItems").hide()
 				$("#selectList").hide()
 				$('#divEditList').show()
+				$('#divDeleteList').show()
 				this.inputListNameTarget.value = response.list.name
+				$('#inputListName').select()
 			} else {
 				console.log("Não encontrado")
 			}
@@ -75,6 +77,7 @@ export default class extends Controller {
 	saveListEdited(){
 		var exist = false
 		var inputListName = this.inputListNameTarget.value
+		var inputListId =  this.inputListIdTarget.value
 
 		if (inputListName < 1 ) {
 			this.showAlerts('empty', false)
@@ -106,20 +109,30 @@ export default class extends Controller {
 				})
 				.then(response => {
 					if (response.list) {
-						console.log("Editado com sucesso: " + response.list.name)
+
+						$('#selectList').find('option').each(function(){
+							if ($(this).attr("data-list-id") == inputListId) {
+								//console.log($(this).attr("data-list-id"))
+								$(this).text(response.list.name)
+							}
+						})
+
+						this.showAlerts("edit-success", false)
+						this.showDivTableSelect()
+
 					} else {
+						this.showAlerts("serverError", false)
 						console.log("Error: " + response.error)
 					}
 				})
 
-				this.showAlerts("edit-success", false)
-				this.showDivTableSelect()
 			}
 		}
 	}
 
 	showDivTableSelect(){
 		$('#divEditList').hide()		
+		$('#divDeleteList').hide()
 		$('#divNewList').show()
 		$("#tableItems").show()
 		$("#selectList").show()
@@ -171,7 +184,18 @@ export default class extends Controller {
 							if (response.item) {
 
 								this.showAlerts("create-success", false);
-								this.showAllItems()
+								//this.showAllItems()
+								var listItemHtml = ""
+								listItemHtml += `<tr data-item-id="${response.item._id.$oid}"> <td><strong> ${response.item.name} </strong> </td>`
+								listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
+								listItemHtml += `<td><button type="button" name="deleteBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
+								listItemHtml += `</tr>`
+
+								if (this.resultsTarget.innerText.length > 8) {
+									this.resultsTarget.innerHTML += listItemHtml
+								} else {
+									this.resultsTarget.innerHTML = listItemHtml
+								}
 							}
 							else{
 								this.showAlerts("serverError", false)
@@ -261,14 +285,27 @@ export default class extends Controller {
 	}
 
 	deleteItem(){
-		fetch(`/item/${this.inputItemIdTarget.value}`,{
+		var itemId = this.inputItemIdTarget.value
+		fetch(`/item/${itemId}`,{
 			method: 'DELETE'
 		}).then(response =>{
 			$('#modalDeleteItem').modal('toggle');
-			this.showAllItems()
+			//this.showAllItems()
+
+			//Remove a specific row
+			$(`#tableItems tr[data-item-id="${itemId}"]`).remove()
 			this.showAlerts('delete', false)
 		})
 	}
+
+	printAll(number){
+		if (number % 2 == 0) {
+			return "É par"
+		} else {
+			return "É impar"
+		}
+	}
+
 
 	showAlerts(type, isModal){
 		var listItemHtml = ""
@@ -315,8 +352,8 @@ export default class extends Controller {
 				console.log('Sorry');
 		}
 
-		listItemHtml = `<div class='alert ${alertType} '>${message}`
-		listItemHtml += "<button type='button' class='close' data-dismiss='alert' aria-label='Fechar'>"
+		listItemHtml = `<div class="alert ${alertType}">${message}`
+		listItemHtml += "<button type='button' class='close' data-dismiss='alert'>"
 		listItemHtml += "<span aria-hidden='true'>&times;</span>"
 		listItemHtml+= "</button>"
 		listItemHtml += "</div>"

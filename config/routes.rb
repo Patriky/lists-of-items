@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
 	get "lists/new" => "lists#new"
 	post "lists" => "lists#create"
+	
+	get "lists" => "lists#index"
+
 	get "list/:list_id" => "lists#get_list"
 
 	post 'list/:list_id' => "lists#update"

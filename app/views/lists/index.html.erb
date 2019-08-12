@@ -18,7 +18,7 @@
                 </div>
         	<% end %>
             <div class="input-group input-group-sm mb-3" id="divEditList" style="display: none;">
-                <input class="form-control" data-target="listController.inputListName" type="text">
+                <input id="inputListName" class="form-control" data-target="listController.inputListName" type="text">
                 <input class="form-control" data-target="listController.inputListId" type="hidden">
                 <span class="input-group-btn">
                     <button class="btn btn-danger btn-sm" data-action=listController#showDivTableSelect>Cancelar</button>
@@ -53,7 +53,8 @@
                         <option name="optionList" data-action="click->listController#showAllItems dblclick->listController#editListSelected" data-list-id="<%= lis._id %>" > <%= lis.name %> </option>
                     <% end %>
                 <% end %>
-            </select>            
+            </select>
+       
         </div>
         <br>
         <div class="col-sm-8" >
