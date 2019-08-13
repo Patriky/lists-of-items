@@ -6,5 +6,5 @@ class List
   validates_presence_of :name, message: "Insira uma lista"
   validates_uniqueness_of :name, message: 'Já existe'
 
-  has_many :item
+  has_many :item, dependent: :destroy
 end

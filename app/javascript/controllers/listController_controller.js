@@ -298,14 +298,21 @@ export default class extends Controller {
 		})
 	}
 
-	printAll(number){
-		if (number % 2 == 0) {
-			return "É par"
-		} else {
-			return "É impar"
-		}
-	}
+	deleteList(){
+		var listId = this.inputListIdTarget.value
+		fetch(`/list/${listId}`,{
+			method: 'DELETE'
+		}).then(response =>{
+			console.log(response)
+			//this.showAllItems()
+			this.showDivTableSelect()
+			this.showAllItems()
 
+			//Remove a specific row
+			$(`#selectList option[data-list-id="${listId}"]`).remove()
+			//this.showAlerts('delete', false)
+		})		
+	}
 
 	showAlerts(type, isModal){
 		var listItemHtml = ""

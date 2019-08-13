@@ -1,5 +1,6 @@
 class ListsController < ApplicationController
-	before_action :load_list, only:[:update, :get_list]
+	skip_before_action :verify_authenticity_token
+	before_action :load_list, only:[:update, :get_list, :destroy]
 
 	def index
 		@lists = List.all
@@ -37,10 +38,15 @@ class ListsController < ApplicationController
 		    format.html { redirect_to action: "index" }
 		    #format.json { render :show, status: :created, location: @list }
 		  else
-		 	render json: { error: @list.error}
+		 	render json: { error: @list.errors}
 		  end
 		end
 	end
+
+	def destroy
+		@list.destroy
+	end
+
 
 	private
 		def load_list

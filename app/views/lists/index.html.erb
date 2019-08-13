@@ -17,7 +17,7 @@
                     </span>
                 </div>
         	<% end %>
-            <div class="input-group input-group-sm mb-3" id="divEditList" style="display: none;">
+            <div class="input-group input-group-sm mb-3" id="divEditList" style="display: none">
                 <input id="inputListName" class="form-control" data-target="listController.inputListName" type="text">
                 <input class="form-control" data-target="listController.inputListId" type="hidden">
                 <span class="input-group-btn">
@@ -54,7 +54,10 @@
                     <% end %>
                 <% end %>
             </select>
-       
+
+            <div class="input-group input-group-sm mb-3" id="divDeleteList" style="display: none">
+                <button class="btn btn-danger" data-action="click->listController#deleteList">Deletar Lista</button>
+            </div>            
         </div>
         <br>
         <div class="col-sm-8" >
