@@ -50,6 +50,7 @@ export default class extends Controller {
 		});
 	}
 
+	//Ao clicar 2 vezes em algum option, o e.target pega o id clicado
 	editListSelected(event){
 		var listId = event.target.getAttribute("data-list-id")
 		this.inputListIdTarget.value = listId
@@ -66,6 +67,7 @@ export default class extends Controller {
 				$("#selectList").hide()
 				$('#divEditList').show()
 				$('#divDeleteList').show()
+				//Preenche o input com o nome dentro do modal
 				this.inputListNameTarget.value = response.list.name
 				$('#inputListName').select()
 			} else {
@@ -74,6 +76,7 @@ export default class extends Controller {
 		})
 	}
 
+	//É chamado após clicar em Salvar, dentro do modal.
 	saveListEdited(){
 		var exist = false
 		var inputListName = this.inputListNameTarget.value
@@ -82,6 +85,7 @@ export default class extends Controller {
 		if (inputListName < 1 ) {
 			this.showAlerts('empty', false)
 		} else {
+			//Verifica se já existe algum option com o mesmo nome dentro do select
 			$('#selectList').find('option').each(function(){
 				if (inputListName.toUpperCase() == $(this).val().toUpperCase()) {
 					exist = true
@@ -91,6 +95,7 @@ export default class extends Controller {
 			if (exist == true) {
 				this.showAlerts("exist", false)
 			} else {
+
 				var data = {
 					name: inputListName
 				}
@@ -109,7 +114,7 @@ export default class extends Controller {
 				})
 				.then(response => {
 					if (response.list) {
-
+						//Procura pelo option editado e seta o texto com o response.list.name
 						$('#selectList').find('option').each(function(){
 							if ($(this).attr("data-list-id") == inputListId) {
 								//console.log($(this).attr("data-list-id"))
@@ -118,7 +123,7 @@ export default class extends Controller {
 						})
 
 						this.showAlerts("edit-success", false)
-						this.showDivTableSelect()
+						this.showGridDefault()
 
 					} else {
 						this.showAlerts("serverError", false)
@@ -130,7 +135,7 @@ export default class extends Controller {
 		}
 	}
 
-	showDivTableSelect(){
+	showGridDefault(){
 		$('#divEditList').hide()		
 		$('#divDeleteList').hide()
 		$('#divNewList').show()
@@ -142,6 +147,7 @@ export default class extends Controller {
 		var selectSelected = document.getElementById("selectList");
 		var exist = false;
 		try{
+			//Verifica qual option está selecionado. 
 			var idListSelected = selectSelected.options[selectSelected.selectedIndex].getAttribute("data-list-id");
 			//console.log("ID: " + idListSelected)
 			//console.log("Item: " + this.newItemTarget.value)
@@ -191,6 +197,8 @@ export default class extends Controller {
 								listItemHtml += `<td><button type="button" name="deleteBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
 								listItemHtml += `</tr>`
 
+								console.log(this.resultsTarget.innerHTML)
+								console.log(this.resultsTarget.innerText)
 								if (this.resultsTarget.innerText.length > 8) {
 									this.resultsTarget.innerHTML += listItemHtml
 								} else {
@@ -292,7 +300,7 @@ export default class extends Controller {
 			$('#modalDeleteItem').modal('toggle');
 			//this.showAllItems()
 
-			//Remove a specific row
+			//Remove a specific row 
 			$(`#tableItems tr[data-item-id="${itemId}"]`).remove()
 			this.showAlerts('delete', false)
 		})
@@ -303,14 +311,13 @@ export default class extends Controller {
 		fetch(`/list/${listId}`,{
 			method: 'DELETE'
 		}).then(response =>{
-			console.log(response)
 			//this.showAllItems()
-			this.showDivTableSelect()
-			this.showAllItems()
+			this.showGridDefault()
+			//this.showAllItems()
 
 			//Remove a specific row
 			$(`#selectList option[data-list-id="${listId}"]`).remove()
-			//this.showAlerts('delete', false)
+			this.showAlerts('delete', false)
 		})		
 	}
 
@@ -359,11 +366,13 @@ export default class extends Controller {
 				console.log('Sorry');
 		}
 
-		listItemHtml = `<div class="alert ${alertType}">${message}`
+		listItemHtml = `<div id= "alert" class="alert ${alertType} ">${message}`
 		listItemHtml += "<button type='button' class='close' data-dismiss='alert'>"
 		listItemHtml += "<span aria-hidden='true'>&times;</span>"
 		listItemHtml+= "</button>"
 		listItemHtml += "</div>"
+
+		setTimeout(function () { $('#alert').hide(); }, 2500); // O valor é representado em milisegundos.
 
 		if (isModal == true) {
 			this.modalAlertsTarget.innerHTML = listItemHtml

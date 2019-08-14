@@ -22,7 +22,7 @@ class ListsController < ApplicationController
 	  	if @list.update(lists_params)
 	  		render json: { list: @list, str: "Salvou - Retornando ao front-end"}
 	  	else 
-	  		render json: { error: @list.error }
+	  		render json: { error: @list.errors }
 	  	end		
 	end
 
@@ -38,7 +38,10 @@ class ListsController < ApplicationController
 		    format.html { redirect_to action: "index" }
 		    #format.json { render :show, status: :created, location: @list }
 		  else
-		 	render json: { error: @list.errors}
+		  	p "@"*100
+		  	p "Não salvou! #{@list.name}"
+		  	p "@"*100
+		 	format.html { redirect_to action: "index" }
 		  end
 		end
 	end
