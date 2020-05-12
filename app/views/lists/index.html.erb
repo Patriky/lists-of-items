@@ -2,7 +2,6 @@
 
     <div class="row">
         <div data-target="listController.alerts" >
-
         </div>
     </div>
     <div class="row">
@@ -21,7 +20,7 @@
                 <input id="inputListName" class="form-control" data-target="listController.inputListName" type="text">
                 <input class="form-control" data-target="listController.inputListId" type="hidden">
                 <span class="input-group-btn">
-                    <button class="btn btn-danger btn-sm" data-action=listController#showDivTableSelect>Cancelar</button>
+                    <button class="btn btn-danger btn-sm" data-action=listController#showGridDefault>Cancelar</button>
                     <button class="btn btn-success btn-sm" data-action=listController#saveListEdited>Salvar</button>
                 </span>
                 
@@ -119,6 +118,32 @@
             <input class="form-control" type="hidden" data-target="listController.inputItemId">
             <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
             <button type="button" data-action="click->listController#deleteItem" class="btn btn-success btn-sm">Deletar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal para editar uma lista -->
+  <div class="modal fade" id="modalEditList" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Editar Lista</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+        <div data-target="listController.modalAlerts" >
+        </div>
+
+            <input class="form-control" data-target="listController.inputListNameEdit" type="text">
+            <input class="form-control" type="hidden" data-target="listController.inputListId">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
+          <button type="button" data-action="click->listController#saveListEdited" class="btn btn-success btn-sm">Salvar mudanças</button>
         </div>
       </div>
     </div>

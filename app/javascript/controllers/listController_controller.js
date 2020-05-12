@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId']
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit']
 
 	connect(){
 		//console.log("Conected..")
@@ -62,14 +62,16 @@ export default class extends Controller {
 		})
 		.then(response =>{
 			if (response.list) {
-				$('#divNewList').hide()
-				$("#tableItems").hide()
-				$("#selectList").hide()
-				$('#divEditList').show()
-				$('#divDeleteList').show()
+//				$('#divNewList').hide()
+//				$("#tableItems").hide()
+//				$("#selectList").hide()
+//				$('#divEditList').show()
+//				$('#divDeleteList').show()
+
 				//Preenche o input com o nome dentro do modal
-				this.inputListNameTarget.value = response.list.name
-				$('#inputListName').select()
+				this.inputListNameEditTarget.value = response.list.name
+				$("#modalEditList").modal();
+				$('#inputListNameEdit').select()
 			} else {
 				console.log("Não encontrado")
 			}
@@ -79,7 +81,7 @@ export default class extends Controller {
 	//É chamado após clicar em Salvar, dentro do modal.
 	saveListEdited(){
 		var exist = false
-		var inputListName = this.inputListNameTarget.value
+		var inputListName = this.inputListNameEditTarget.value
 		var inputListId =  this.inputListIdTarget.value
 
 		if (inputListName < 1 ) {
@@ -121,7 +123,7 @@ export default class extends Controller {
 								$(this).text(response.list.name)
 							}
 						})
-
+						$('#modalEditList').modal('toggle');
 						this.showAlerts("edit-success", false)
 						this.showGridDefault()
 

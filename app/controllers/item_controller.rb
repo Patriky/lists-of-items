@@ -29,6 +29,11 @@ class ItemController < ApplicationController
 
 		if list_id.present?
 			items = Item.where(:list_id => list_id)
+		  	p "@"*100
+			items.each do |n|
+				p n.name
+			end
+		  	p "@"*100
 			render json: { itemsSelected: items }
 		else
 			puts "ERRO!"
