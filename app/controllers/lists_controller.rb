@@ -47,6 +47,27 @@ class ListsController < ApplicationController
 	end
 
 	def destroy
+		p "@"*100
+		p "ENTROU NO DESTROY"
+		p "@"*100
+
+		items = Item.where("list_id = " + @list._id )
+		p "@"*100
+		p "@"*100
+
+		p "@"*100
+		p items
+		p "@"*100
+
+
+		#items.each { |item| p item}
+
+		
+
+
+		#@list.destroy
+
+		#Só estava essa linha. Trocar tbm o routes e o listController_controller
 		@list.destroy
 	end
 

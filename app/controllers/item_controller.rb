@@ -1,6 +1,7 @@
 class ItemController < ApplicationController
 	skip_before_action :verify_authenticity_token
 	before_action :load_item, only: [:update, :destroy, :get_item]
+	
 	def new
 		
 	end
@@ -25,7 +26,11 @@ class ItemController < ApplicationController
 
 	#POST /items/:item_id
 	def showItemsSelected
-	  	list_id = params[:list_id]
+		  list_id = params[:list_id]
+		  p "_"*100
+		  p list_id
+		  p "_"*100
+
 
 		if list_id.present?
 			items = Item.where(:list_id => list_id)
@@ -45,6 +50,9 @@ class ItemController < ApplicationController
 
 	def update
 
+		p "@"*100
+		p "ENtrou no Update"
+		p "@"*100
 	  	if @item.update(items_params)
 	  		render json: { item: @item, str: "Salvou - Retornando ao front-end"}
 	  	else 
@@ -67,6 +75,6 @@ class ItemController < ApplicationController
 	    end
 
 		def items_params
-			params.require(:item).permit(:name, :list_id)
+			params.require(:item).permit(:name, :is_selected, :list_id)
 		end
 end

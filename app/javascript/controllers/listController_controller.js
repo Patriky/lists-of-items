@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit']
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isSelected"]
 
 	connect(){
 		//console.log("Conected..")
@@ -40,6 +40,14 @@ export default class extends Controller {
 					listItemHtml += `<tr data-item-id="${item._id.$oid}"> <td><strong> ${item.name} </strong> </td>`
 					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
 					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
+					listItemHtml += `<td><input type="checkbox" name="isSelected" data-target="listController.isSelected" data-action="listController#selectionItem" item-id="${item._id.$oid}" `
+
+					// Se no banco estiver true, concatena checked no html para que fique setado o checkbox
+					if (item.is_selected) {
+						listItemHtml += " checked "
+					}
+
+					listItemHtml += `class="custom-control-input"><strong> Concluída</strong></td>`
 					listItemHtml += `</tr>`
 				})
 				this.resultsTarget.innerHTML = listItemHtml
@@ -66,7 +74,7 @@ export default class extends Controller {
 //				$("#tableItems").hide()
 //				$("#selectList").hide()
 //				$('#divEditList').show()
-//				$('#divDeleteList').show()
+				$('#divDeleteList').show()
 
 				//Preenche o input com o nome dentro do modal
 				this.inputListNameEditTarget.value = response.list.name
@@ -137,6 +145,37 @@ export default class extends Controller {
 		}
 	}
 
+
+	selectionItem(e){
+		var checkedValue = e.target.checked;
+
+		let item_id = e.target.getAttribute("item-id");
+
+		var url = `items/${item_id}`;
+
+		var data = {
+			is_selected: checkedValue
+		}
+
+		fetch(url, {
+			method: "POST",
+			//Content Negotiation 
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRF-Token': Rails.csrfToken()
+			},
+			body: JSON.stringify(data)
+		})
+		.then(response => {
+			return response.json()
+		})
+		.then(response =>{
+			//console.log(response.item.is_selected);
+		})
+	}
+
+
+
 	showGridDefault(){
 		$('#divEditList').hide()		
 		$('#divDeleteList').hide()
@@ -197,10 +236,11 @@ export default class extends Controller {
 								listItemHtml += `<tr data-item-id="${response.item._id.$oid}"> <td><strong> ${response.item.name} </strong> </td>`
 								listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
 								listItemHtml += `<td><button type="button" name="deleteBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
+								listItemHtml += `<td><input type="checkbox" name="isSelected" data-target="listController.isSelected" data-action="listController#selectionItem" item-id="${response.item._id.$oid}" class="custom-control-input"><strong> Concluída</strong></td>`
 								listItemHtml += `</tr>`
 
-								console.log(this.resultsTarget.innerHTML)
-								console.log(this.resultsTarget.innerText)
+								//console.log(this.resultsTarget.innerHTML)
+								//console.log(this.resultsTarget.innerText)
 								if (this.resultsTarget.innerText.length > 8) {
 									this.resultsTarget.innerHTML += listItemHtml
 								} else {
@@ -310,8 +350,8 @@ export default class extends Controller {
 
 	deleteList(){
 		var listId = this.inputListIdTarget.value
-		fetch(`/list/${listId}`,{
-			method: 'DELETE'
+		fetch(`/teste/${listId}`,{  // /list/${listId}
+			method: 'GET' // DELETE
 		}).then(response =>{
 			//this.showAllItems()
 			this.showGridDefault()

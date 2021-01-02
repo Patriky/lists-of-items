@@ -17,7 +17,12 @@ Rails.application.routes.draw do
 	delete 'item/:item_id' => "item#destroy"
 
 
+	get 'teste/:list_id' => "lists#destroy"
+
 	#Create new item
 	post "items" => "item#create"
+
+
+	get "sobre" => "sobre#index"
 
 end
