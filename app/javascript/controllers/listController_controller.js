@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isSelected"]
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress"]
 
 	connect(){
 		//console.log("Conected..")
@@ -37,17 +37,34 @@ export default class extends Controller {
 			var listItemHtml = ""
 			if (response.itemsSelected.length > 0){
 				response.itemsSelected.forEach((item) => {
-					listItemHtml += `<tr data-item-id="${item._id.$oid}"> <td><strong> ${item.name} </strong> </td>`
-					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
-					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
-					listItemHtml += `<td><input type="checkbox" name="isSelected" data-target="listController.isSelected" data-action="listController#selectionItem" item-id="${item._id.$oid}" `
+					var checked = ""
+					var done = ""
+					//var valuenow = 3
+					if (item.is_done) {
+						checked = " checked ";
+						done = "table-success";
+						//valuenow = 100;
 
-					// Se no banco estiver true, concatena checked no html para que fique setado o checkbox
-					if (item.is_selected) {
-						listItemHtml += " checked "
 					}
 
-					listItemHtml += `class="custom-control-input"><strong> Concluída</strong></td>`
+					listItemHtml += `<tr data-item-id="${item._id.$oid}"> <td>${item.name} </td>`
+					// listItemHtml += `<td>`
+					// listItemHtml += `<div class="progress" style="width: 100px">`
+					// listItemHtml += `<div class="progress-bar" role="progressbar" style="width:${item.progress ? item.progress : 10}%" aria-valuenow="${item.progress ? item.progress : 10}" aria-valuemin="0" aria-valuemax="100"></div>`
+					// listItemHtml += `</div>`
+					// listItemHtml += `</td>`
+					listItemHtml += `<td> <input type="range" class="form-control-range" id="formControlRange" style="width: 100px" min="0" max="100" step="25" value="${item.progress ? item.progress : 0}">` 
+					listItemHtml += `</td>`
+					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Edit</td>`
+					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Delete</td>`
+					listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${item._id.$oid}" ${checked} `
+
+					// // Se no banco estiver true, concatena checked no html para que fique setado o checkbox
+					// if (item.is_selected) {
+					// 	listItemHtml += " checked "
+					// }
+
+					listItemHtml += `class="custom-control-input"></td>`
 					listItemHtml += `</tr>`
 				})
 				this.resultsTarget.innerHTML = listItemHtml
@@ -154,7 +171,7 @@ export default class extends Controller {
 		var url = `items/${item_id}`;
 
 		var data = {
-			is_selected: checkedValue
+			is_done: checkedValue
 		}
 
 		fetch(url, {
@@ -236,7 +253,7 @@ export default class extends Controller {
 								listItemHtml += `<tr data-item-id="${response.item._id.$oid}"> <td><strong> ${response.item.name} </strong> </td>`
 								listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
 								listItemHtml += `<td><button type="button" name="deleteBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
-								listItemHtml += `<td><input type="checkbox" name="isSelected" data-target="listController.isSelected" data-action="listController#selectionItem" item-id="${response.item._id.$oid}" class="custom-control-input"><strong> Concluída</strong></td>`
+								listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${response.item._id.$oid}" class="custom-control-input"><strong> Concluída</strong></td>`
 								listItemHtml += `</tr>`
 
 								//console.log(this.resultsTarget.innerHTML)
@@ -408,10 +425,22 @@ export default class extends Controller {
 				console.log('Sorry');
 		}
 
-		listItemHtml = `<div id= "alert" class="alert ${alertType} ">${message}`
+
+		// listItemHtml = `<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">`
+		// 	listItemHtml += `<div class="toast-header">`
+		// 		listItemHtml += `<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">`
+		// 			listItemHtml += `<span aria-hidden="true">&times;</span>`
+		// 		listItemHtml += `</button>`
+		// 	listItemHtml += `</div>`
+		// 	listItemHtml += `<div class="toast-body">`
+		// 		listItemHtml += `Hello, world! This is a toast message.`
+		// 	listItemHtml += `</div>`
+		// listItemHtml += `</div>`
+
+		listItemHtml = `<div id= "alert" class="alert ${alertType} style="position: relative; min-height: 200px;" ">${message} `
 		listItemHtml += "<button type='button' class='close' data-dismiss='alert'>"
 		listItemHtml += "<span aria-hidden='true'>&times;</span>"
-		listItemHtml+= "</button>"
+		listItemHtml += "</button>"
 		listItemHtml += "</div>"
 
 		setTimeout(function () { $('#alert').hide(); }, 2500); // O valor é representado em milisegundos.

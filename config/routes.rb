@@ -25,4 +25,7 @@ Rails.application.routes.draw do
 
 	get "sobre" => "sobre#index"
 
+	#Path to tests
+	get "test" => "test#index"
+
 end
