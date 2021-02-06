@@ -63,11 +63,12 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th scope="col">Done</th>
                         <th scope="col"style="width: 250px">Items</th>
                         <th scope="col" >Progress</th>
+                        <th scope="col" >Deadline</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col">Done</th>
                     </tr>
                 </thead>
 
@@ -82,7 +83,7 @@
 
 <!-- Modal para Edit um item -->
   <div class="modal fade" id="modalEditItem" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" >Edit Item</h5>
@@ -95,8 +96,14 @@
         <div data-target="listController.modalAlerts" >
         </div>
 
-            <input class="form-control" data-target="listController.inputItemName" type="text">
             <input class="form-control" type="hidden" data-target="listController.inputItemId">
+
+            <input class="form-control" data-target="listController.inputItemName" type="text">
+            <p>Progress: <span id="progresss"></span>%</p>
+
+            <input class="form-control" data-target="listController.inputProgress" type="range">
+            <p>Deadline</p>
+            <input class="form-control" data-target="listController.inputDeadline" type="date">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>

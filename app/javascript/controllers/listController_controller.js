@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress"]
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress", "inputDeadline", "testeProgress"]
 
 	connect(){
 		//console.log("Conected..")
@@ -47,24 +47,23 @@ export default class extends Controller {
 
 					}
 
-					listItemHtml += `<tr data-item-id="${item._id.$oid}"> <td>${item.name} </td>`
+					listItemHtml += `<tr data-item-id="${item._id.$oid}"> `
+					listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${item._id.$oid}" ${checked} class="custom-control-input"></td> `
+					listItemHtml += `<td>${item.name} </td> `
 					// listItemHtml += `<td>`
 					// listItemHtml += `<div class="progress" style="width: 100px">`
 					// listItemHtml += `<div class="progress-bar" role="progressbar" style="width:${item.progress ? item.progress : 10}%" aria-valuenow="${item.progress ? item.progress : 10}" aria-valuemin="0" aria-valuemax="100"></div>`
 					// listItemHtml += `</div>`
 					// listItemHtml += `</td>`
-					listItemHtml += `<td> <input type="range" class="form-control-range" id="formControlRange" style="width: 100px" min="0" max="100" step="25" value="${item.progress ? item.progress : 0}">` 
-					listItemHtml += `</td>`
+					listItemHtml += `<td> <input type="range" class="form-control-range" id="formControlRange" style="width: 100px" min="0" max="100" item-id="${item._id.$oid}" step="25" value="${item.progress ? item.progress : 0}" data-target="listController.inputProgress" data-action="click->listController#updateProgress" </td>` 
+					listItemHtml += `<td name="inputDeadline" item-id="${item._id.$oid}">${item.created_at ? item.created_at : ''} </td>`
 					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Edit</td>`
 					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Delete</td>`
-					listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${item._id.$oid}" ${checked} `
 
 					// // Se no banco estiver true, concatena checked no html para que fique setado o checkbox
 					// if (item.is_selected) {
 					// 	listItemHtml += " checked "
 					// }
-
-					listItemHtml += `class="custom-control-input"></td>`
 					listItemHtml += `</tr>`
 				})
 				this.resultsTarget.innerHTML = listItemHtml
@@ -187,7 +186,7 @@ export default class extends Controller {
 			return response.json()
 		})
 		.then(response =>{
-			//console.log(response.item.is_selected);
+			
 		})
 	}
 
@@ -209,10 +208,11 @@ export default class extends Controller {
 			var idListSelected = selectSelected.options[selectSelected.selectedIndex].getAttribute("data-list-id");
 			//console.log("ID: " + idListSelected)
 			//console.log("Item: " + this.newItemTarget.value)
-
+			var created_at = new Date();
 			let data = {
 				name: this.inputNewItemNameTarget.value,
-				list_id: idListSelected
+				list_id: idListSelected,
+				created_at: created_at
 			}
 
 			this.resultsTargets.forEach((tbodyRow) => {
@@ -338,6 +338,18 @@ export default class extends Controller {
 			}).then(response => {
 				//preenche o input no modal com no nome
 				this.inputItemNameTarget.value = response.item.name
+				// this.testeProgressTarget.value = "testando"
+				// console.log(this.testeProgressTarget.value)
+				//this.inputProgressTarget.value = response.item.progress
+				if(response.item.progress){
+					this.inputProgressTarget.value = response.item.progress
+					document.getElementById("progresss").innerHTML = response.item.progress
+					console.log(this.inputProgressTarget.value)
+				}
+				if(response.item.created_at){
+					this.inputDeadlineTarget.value = response.item.created_at
+					console.log(this.inputDeadlineTarget.value)
+				}
 				//chamar modal
 				$('#modalEditItem').modal()
 
@@ -451,5 +463,34 @@ export default class extends Controller {
 		} else {
 			this.alertsTarget.innerHTML = listItemHtml
 		}
+	}
+
+
+	updateProgress(e){
+		var progressValue = e.target.value
+		let item_id = e.target.getAttribute("item-id");
+		var url = `items/${item_id}`
+
+		var data = {
+			progress: progressValue
+		}
+
+		fetch(url,{
+			method: "POST",
+			//Content Negotiation 
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRF-Token': Rails.csrfToken()
+			},
+			body: JSON.stringify(data)
+		})
+		.then(response => {
+			return response.json()
+		})
+		.then(response =>{
+			//console.log(response.item.progress);
+		})
+
+
 	}
 }

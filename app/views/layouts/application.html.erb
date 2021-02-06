@@ -12,22 +12,13 @@
   </head>
 
   <body>
-    <header class="navbar navbar-fixed-top navbar-light " id="navbar" >
-      <div >
-        <div class="col-sm-2">
-          <ul class="nav navbar-nav navbar-left">
-            <li><%= link_to image_tag("logo_wayv2.png"), '/' %></li>
-            <a style="margin: 10px;"><%= link_to "teste", '/test' %></a>
-          </ul>
-        </div>
-        <nav class="col-sm-10">
-          <ul class="nav navbar-nav navbar-right">
-            
-          </ul>
-        </nav>
-      </div>
-    </header>
+
+    <%= render 'home/header' %>
+    
+
     <%= yield %>
 
+
+    <%= render 'home/footer' %>
   </body>
 </html>
