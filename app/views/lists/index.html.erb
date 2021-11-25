@@ -1,12 +1,11 @@
-<div class="container" data-controller= "listController">
+<div data-controller= "listController">
 
     <div class="row">
         <div data-target="listController.alerts" >
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-1">
-        </div>
+        <!-- <div class="col-sm-1">Colocar um Menu lateral aqui</div> -->
         <div class="col-sm-3">
         	<%= form_for @list do |l| %>
                 <div class="input-group mb-3" id= "divNewList">
@@ -23,10 +22,7 @@
                     <button class="btn btn-danger btn-sm" data-action=listController#showGridDefault>Cancel</button>
                     <button class="btn btn-success btn-sm" data-action=listController#saveListEdited>Save</button>
                 </span>
-                
             </div>
-
-
         </div>
 
         <div class="col-sm-8">
@@ -40,9 +36,7 @@
 
     </div>
     <div class="row">
-        <div class="col-sm-1">
-            
-        </div>
+        <!-- <div class="col-sm-1">Colocar um Menu lateral aqui </div> -->
         <div class="col-sm-3">
             <select class="form-control" name="selectList" id="selectList" size="20">
                 <% if @lists.length == 0 %>
@@ -64,8 +58,10 @@
                 <thead>
                     <tr>
                         <th scope="col">Done</th>
-                        <th scope="col"style="width: 250px">Items</th>
+                        <th scope="col"style="width: 300px">Items</th>
                         <th scope="col" >Progress</th>
+                        <th scope="col" >Created</th>
+                        <th scope="col" >Assignee</th>
                         <th scope="col" >Deadline</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -97,13 +93,34 @@
         </div>
 
             <input class="form-control" type="hidden" data-target="listController.inputItemId">
-
+            <label>Name</label>
             <input class="form-control" data-target="listController.inputItemName" type="text">
-            <p>Progress: <span id="progresss"></span>%</p>
-
-            <input class="form-control" data-target="listController.inputProgress" type="range">
-            <p>Deadline</p>
+            <br>
+            <label>Progress: <span id="progress"></span>%</label>
+            <!-- <input class="form-control" id="progress" data-target="listController.inputProgress" type="range"> -->
+            <br>
+            <label>Assignee</label>
+            <select class="form-control" name="inputAssigne" data-target="listController.inputAssignee">
+                <option value=""></option>
+                <option value="Patriky">Patriky</option>
+                <option value="Pedro">Pedro</option>
+                <option value="Marlon">Marlon</option>
+                <option value="Eder">Eder</option>
+                <option value="Vitória">Vitória</option>
+            </select>
+            <br>
+            <label>Deadline</label>
             <input class="form-control" data-target="listController.inputDeadline" type="date">
+            <br>
+            <label>Priority</label>
+            <select class="form-control" name="inputPriority" data-target="listController.inputPriority">
+                <option value="low">Low</option>
+                <option value="medium">medium</option>
+                <option value="high">High</option>
+            </select>
+            <br>
+            Notes
+            <textarea name="inputNote" class="form-control" data-target="listController.inputNote"></textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>

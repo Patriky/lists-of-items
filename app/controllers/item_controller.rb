@@ -10,15 +10,10 @@ class ItemController < ApplicationController
 		item = Item.new(items_params)
 
 		if item.save
-		  	p "@"*50
 		  	p "Salvou! #{item.name}"
-		  	p "@"*50
 
 		  	render json: { item: item }
 		else
-		  	p "@"*100
-		  	p "ERRO! #{item.errors}"
-		  	p "@"*100
 		  	render json: { error: item.errors}
 		end
 
@@ -27,18 +22,13 @@ class ItemController < ApplicationController
 	#POST /items/:item_id
 	def showItemsSelected
 		  list_id = params[:list_id]
-		  p "_"*100
-		  p list_id
-		  p "_"*100
 
 
 		if list_id.present?
 			items = Item.where(:list_id => list_id)
-		  	p "@"*100
 			items.each do |n|
 				p n.name
 			end
-		  	p "@"*100
 			render json: { itemsSelected: items }
 		else
 			puts "ERRO!"
@@ -50,9 +40,6 @@ class ItemController < ApplicationController
 
 	def update
 
-		p "@"*100
-		p "ENtrou no Update"
-		p "@"*100
 	  	if @item.update(items_params)
 	  		render json: { item: @item, str: "Salvou - Retornando ao front-end"}
 	  	else 
@@ -75,6 +62,6 @@ class ItemController < ApplicationController
 	    end
 
 		def items_params
-			params.require(:item).permit(:name, :is_done, :progress, :created_at, :deadline, :list_id)
+			params.require(:item).permit(:name, :is_done, :progress, :created_at, :deadline, :priority, :note, :list_id, :assignee)
 		end
 end

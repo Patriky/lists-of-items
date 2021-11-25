@@ -16,9 +16,7 @@ class ListsController < ApplicationController
 	end
 
 	def update
-	  	p "@"*100
 	  	p "Editado! #{@list.name}"
-	  	p "@"*100		
 	  	if @list.update(lists_params)
 	  		render json: { list: @list, str: "Salvou - Retornando ao front-end"}
 	  	else 
@@ -32,37 +30,20 @@ class ListsController < ApplicationController
 
 		respond_to do |format|
 		  if @list.save
-		  	p "@"*100
 		  	p "Salvou! #{@list.name}"
-		  	p "@"*100
 		    format.html { redirect_to action: "index" }
 		    #format.json { render :show, status: :created, location: @list }
 		  else
-		  	p "@"*100
 		  	p "Não salvou! #{@list.name}"
-		  	p "@"*100
 		 	format.html { redirect_to action: "index" }
 		  end
 		end
 	end
 
 	def destroy
-		p "@"*100
-		p "ENTROU NO DESTROY"
-		p "@"*100
 
 		items = Item.where("list_id = " + @list._id )
-		p "@"*100
-		p "@"*100
-
-		p "@"*100
-		p items
-		p "@"*100
-
-
-		#items.each { |item| p item}
-
-		
+		#items.each { |item| p item}	
 
 
 		#@list.destroy

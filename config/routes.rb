@@ -22,10 +22,10 @@ Rails.application.routes.draw do
 	#Create new item
 	post "items" => "item#create"
 
-
 	get "sobre" => "sobre#index"
 
 	#Path to tests
 	get "test" => "test#index"
 
+	get "login" => "login#index"
 end

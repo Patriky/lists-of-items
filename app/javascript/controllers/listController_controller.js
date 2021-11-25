@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress", "inputDeadline", "testeProgress"]
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress", "inputDeadline", "inputPriority", "inputNote", "inputCreated", "inputAssignee"]
 
 	connect(){
 		//console.log("Conected..")
@@ -49,14 +49,16 @@ export default class extends Controller {
 
 					listItemHtml += `<tr data-item-id="${item._id.$oid}"> `
 					listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${item._id.$oid}" ${checked} class="custom-control-input"></td> `
-					listItemHtml += `<td>${item.name} </td> `
+					listItemHtml += `<td><label> ${item.name} </label></td> `
 					// listItemHtml += `<td>`
 					// listItemHtml += `<div class="progress" style="width: 100px">`
 					// listItemHtml += `<div class="progress-bar" role="progressbar" style="width:${item.progress ? item.progress : 10}%" aria-valuenow="${item.progress ? item.progress : 10}" aria-valuemin="0" aria-valuemax="100"></div>`
 					// listItemHtml += `</div>`
 					// listItemHtml += `</td>`
-					listItemHtml += `<td> <input type="range" class="form-control-range" id="formControlRange" style="width: 100px" min="0" max="100" item-id="${item._id.$oid}" step="25" value="${item.progress ? item.progress : 0}" data-target="listController.inputProgress" data-action="click->listController#updateProgress" </td>` 
-					listItemHtml += `<td name="inputDeadline" item-id="${item._id.$oid}">${item.created_at ? item.created_at : ''} </td>`
+					listItemHtml += `<td style="width: 150px"> <input type="range" class="form-control-range" id="formControlRange"  min="0" max="100" item-id="${item._id.$oid}" step="25" value="${item.progress ? item.progress : 0}" data-target="listController.inputProgress" data-action="click->listController#updateProgress" </td>` 
+					listItemHtml += `<td name="inputCreated" item-id="${item._id.$oid}">${item.created_at ? item.created_at : ''} </td>`
+					listItemHtml += `<td name="inputAssignee" item-id="${item._id.$oid}">${item.assignee ? item.assignee : ''} </td>`
+					listItemHtml += `<td name="inputDeadline" item-id="${item._id.$oid}">${item.deadline ? item.deadline : ''} </td>`
 					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Edit</td>`
 					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Delete</td>`
 
@@ -246,14 +248,23 @@ export default class extends Controller {
 						})
 						.then(response => {
 							if (response.item) {
+								var today = new Date();
+								var create_at = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+								// var deadline = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate() + 7);
 
 								this.showAlerts("create-success", false);
 								//this.showAllItems()
 								var listItemHtml = ""
-								listItemHtml += `<tr data-item-id="${response.item._id.$oid}"> <td><strong> ${response.item.name} </strong> </td>`
-								listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-warning btn-sm">Editar</td>`
-								listItemHtml += `<td><button type="button" name="deleteBt" data-action="click->listController#showItemDialog" item-id="${response.item._id.$oid}" class="btn btn-danger btn-sm">Excluir</td>`
-								listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${response.item._id.$oid}" class="custom-control-input"><strong> Concluída</strong></td>`
+								listItemHtml += `<tr data-item-id="${response.item._id.$oid}">`
+								listItemHtml += `<td><input item-id="${response.item._id.$oid}" type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" class="custom-control-input"></td> `
+								listItemHtml += `<td><label item-id="${response.item._id.$oid}"> <strong> ${response.item.name} </strong>   </td>`
+								
+								listItemHtml += `<td style="width: 150px"><input item-id="${response.item._id.$oid}" type="range" class="form-control-range" id="formControlRange" min="0" max="100" value=0 data-target="listController.inputProgress" data-action="click->listController#updateProgress"> </td>`
+								listItemHtml += `<td item-id="${response.item._id.$oid}">${create_at} </td>`
+								listItemHtml += `<td></td>`
+								listItemHtml += `<td item-id="${response.item._id.$oid}"></td>`
+								listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="editBt" data-action="click->listController#showItemDialog" class="btn btn-warning btn-sm">Edit</td>`
+								listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="deleteBt" data-action="click->listController#showItemDialog" class="btn btn-danger btn-sm">Delete</td>`
 								listItemHtml += `</tr>`
 
 								//console.log(this.resultsTarget.innerHTML)
@@ -277,26 +288,41 @@ export default class extends Controller {
 		}
 	}
 
-	saveItemEdited(){
+	saveItemEdited(item_id){
 		var existe = false
+		
+
+		console.log(this.inputItemNameTarget.value)
+		console.log(this.inputProgressTarget.value)
+		console.log(this.inputDeadlineTarget.value)
+		console.log(this.inputPriorityTarget.value)
+		console.log(this.inputNoteTarget.value)
+		console.log(this.inputAssigneeTarget.value)
+
+
 
 		if (this.inputItemNameTarget.value < 1) {
 			this.showAlerts("empty", true)
 		} else {
 			this.resultsTargets.forEach((item) => {
-				var strong = item.querySelectorAll("strong")
-				strong.forEach((item) => {
-					if(item.innerText.toUpperCase() === this.inputItemNameTarget.value.toUpperCase()){
-						existe = true;
-					}
-				})
-				if (existe == true) {
-					this.showAlerts("exist",true)			
-				} else {
+				// var strong = item.querySelectorAll("strong")
+				// strong.forEach((item) => {
+				// 	if(item.innerText.toUpperCase() === this.inputItemNameTarget.value.toUpperCase()){
+				// 		existe = true;
+				// 	}
+				// })
+				// if (existe == true) {
+				// 	this.showAlerts("exist",true)			
+				// } else {
 
 					var itemId = this.inputItemIdTarget.value
 					let data = {
-						name: `${this.inputItemNameTarget.value}`
+						name: `${this.inputItemNameTarget.value}`,
+						// progress: `${this.inputProgressTarget.value}`,
+						deadline: `${this.inputDeadlineTarget.value}`,
+						priority: `${this.inputPriorityTarget.value}`,
+						note: `${this.inputNoteTarget.value}`,
+						assignee: `${this.inputAssigneeTarget.value}`
 					}
 
 					fetch(`/items/${itemId}`,{
@@ -320,7 +346,7 @@ export default class extends Controller {
 							this.showAlerts("edit-success", false)
 						}
 					})					
-				}
+				// }
 			})				
 		}
 	}
@@ -343,13 +369,29 @@ export default class extends Controller {
 				//this.inputProgressTarget.value = response.item.progress
 				if(response.item.progress){
 					this.inputProgressTarget.value = response.item.progress
-					document.getElementById("progresss").innerHTML = response.item.progress
-					console.log(this.inputProgressTarget.value)
+					document.getElementById("progress").innerHTML = response.item.progress
+				}else{
+					document.getElementById("progress").innerHTML = 0
 				}
-				if(response.item.created_at){
-					this.inputDeadlineTarget.value = response.item.created_at
-					console.log(this.inputDeadlineTarget.value)
+
+				if(response.item.deadline){
+					this.inputDeadlineTarget.value = response.item.deadline
+				}else{
+					this.inputDeadlineTarget.value = ""
 				}
+
+				if(response.item.priority){
+					this.inputPriorityTarget.value = response.item.priority
+				}else{
+					this.inputPriorityTarget.value = ""
+				}
+
+				if(response.item.note){
+					this.inputNoteTarget.value = response.item.note
+				}else{
+					this.inputNoteTarget.value = ""
+				}
+
 				//chamar modal
 				$('#modalEditItem').modal()
 

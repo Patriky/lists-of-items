@@ -3,17 +3,23 @@
 	<form>
 	  <div class="form-group">
 	    <label for="formControlRange">Example Range input</label>
-	    <input type="range" class="form-control-range" style="width: 300px" id="progress" min="0" max="100" step="25" data-target="testController.progress" data-action="click->testController#greet">
+	    <input type="range" class="form-control-range" style="width: 300px" id="progress" min="0" max="100" step="5" data-target="testController.progress" data-action="click->testController#greet">
 	  </div>
 	</form>
 </div>
 
 
-
-<div>
-	
-	<input class="form-control" type="number" name="number" style="width: 100px">
+<div data-controller= "helloController">
+	<div class="form-group" >
+		<label>Nome</label>
+		<input type="text" name="name" class="form-control" style="width: 300px" data-target="helloController.name" >
+		<label>City</label>	
+		<input type="text" name="city" class="form-control" style="width: 300px" data-target="helloController.city" >
+		<br>
+		<button class="form-control" style="width: 300px" data-action="click->helloController#printName">Enviar</button>
+	</div>
 </div>
+
 
 
 <!-- data-action="click->listController#deleteList" -->
