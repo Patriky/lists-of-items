@@ -7,6 +7,7 @@ class Item
   field :created_at, type: Date
   field :deadline, type: Date
   field :priority, type: String
+  field :estimated_time, type: String
   field :assignee, type: String
   field :note, type: String
   

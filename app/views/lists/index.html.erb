@@ -63,8 +63,10 @@
                         <th scope="col" >Created</th>
                         <th scope="col" >Assignee</th>
                         <th scope="col" >Deadline</th>
+                        <th scope="col" >Estimated Time</th>
+                        <th scope="col" >Priority</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
+                        <!-- <th scope="col"></th> -->
                     </tr>
                 </thead>
 
@@ -97,33 +99,64 @@
             <input class="form-control" data-target="listController.inputItemName" type="text">
             <br>
             <label>Progress: <span id="progress"></span>%</label>
-            <!-- <input class="form-control" id="progress" data-target="listController.inputProgress" type="range"> -->
+            <input class="form-control" id="progress" data-target="listController.inputProgress" type="range">
             <br>
-            <label>Assignee</label>
-            <select class="form-control" name="inputAssigne" data-target="listController.inputAssignee">
-                <option value=""></option>
-                <option value="Patriky">Patriky</option>
-                <option value="Pedro">Pedro</option>
-                <option value="Marlon">Marlon</option>
-                <option value="Eder">Eder</option>
-                <option value="Vitória">Vitória</option>
+            <div style="display: flex; justify-content: space-between;">
+                <label>Assignee</label>
+                <label style="flex-basis: 49.5%;">Estimated Time</label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <select class="form-control" name="inputAssigne" data-target="listController.inputAssignee">
+                    <option value=""></option>
+                    <option value="Patriky">Patriky</option>
+                    <option value="Pedro">Pedro</option>
+                    <option value="Eduarda">Eduarda</option>
+                    <option value="Marlon">Marlon</option>
+                    <option value="Eder">Eder</option>
+                    <option value="Vitória">Vitória</option>
+                    <option value="HORUS">HORUS</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <!-- <br> -->
+                <select class="form-control" name="inputEstimatedTime" data-target="listController.inputEstimatedTime">
+                    <option value=""></option>
+                    <option value="Less then 1h">Less then 1h</option>
+                    <option value="1h">1h</option>
+                    <option value="2h">2h</option>
+                    <option value="3h">3h</option>
+                    <option value="4h">4h</option>
+                    <option value="5h">5h</option>
+                    <option value="8h">8h</option>
+                    <option value="10h">10h</option>
+                    <option value="12h">12h</option>
+                    <option value="15h">15h</option>
+                    <option value="20h">20h</option>
+                    <option value="More then 20h">More then 20h</option>
+                </select>
+            </div>
+            <br>
+            <div style="display: flex; justify-content: space-between;">
+                <label>Deadline</label>
+                <label style="flex-basis: 49.5%;">Priority</label>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <input class="form-control" data-target="listController.inputDeadline" type="date">
+                <br>
+                <select class="form-control" name="inputPriority" data-target="listController.inputPriority">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Max">Max</option>
             </select>
-            <br>
-            <label>Deadline</label>
-            <input class="form-control" data-target="listController.inputDeadline" type="date">
-            <br>
-            <label>Priority</label>
-            <select class="form-control" name="inputPriority" data-target="listController.inputPriority">
-                <option value="low">Low</option>
-                <option value="medium">medium</option>
-                <option value="high">High</option>
-            </select>
+            </div>
             <br>
             Notes
-            <textarea name="inputNote" class="form-control" data-target="listController.inputNote"></textarea>
+            <textarea rows="10" name="inputNote" class="form-control" data-target="listController.inputNote"></textarea>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+          <button type="button" data-action="click->listController#deleteItem" class="btn btn-danger btn-sm" data-dismiss="modal" style="float:left">DELETE ITEM</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" data-action="click->listController#saveItemEdited" class="btn btn-success btn-sm">Save changes</button>
         </div>
       </div>

@@ -62,6 +62,6 @@ class ItemController < ApplicationController
 	    end
 
 		def items_params
-			params.require(:item).permit(:name, :is_done, :progress, :created_at, :deadline, :priority, :note, :list_id, :assignee)
+			params.require(:item).permit(:name, :is_done, :progress, :created_at, :deadline, :priority, :note, :list_id, :assignee, :estimated_time)
 		end
 end

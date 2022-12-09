@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
 
-	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress", "inputDeadline", "inputPriority", "inputNote", "inputCreated", "inputAssignee"]
+	static targets = ['results', 'inputNewItemName', 'alerts', 'modalAlerts', 'inputItemName', 'inputItemId', 'inputListName', 'inputListId','inputListNameEdit', "isDone", "inputProgress", "inputDeadline", "inputPriority", "inputNote", "inputCreated", "inputAssignee", "inputEstimatedTime"]
 
 	connect(){
 		//console.log("Conected..")
@@ -15,6 +15,7 @@ export default class extends Controller {
 			//Faz a mesma coisa que pegar o id através do e.target.
 			var select = document.getElementById("selectList");
 			var listId = select.options[select.selectedIndex].getAttribute("data-list-id");
+			var priority = select.options[select.selectedIndex].getAttribute("inputPriority");
 			url = `/items/${listId}`
 		} else {
 			//get list_id selected in <select>
@@ -39,15 +40,23 @@ export default class extends Controller {
 				response.itemsSelected.forEach((item) => {
 					var checked = ""
 					var done = ""
+					var color = ""
 					//var valuenow = 3
 					if (item.is_done) {
 						checked = " checked ";
+						color = "#E5F6BB"; 
 						done = "table-success";
 						//valuenow = 100;
 
 					}
 
-					listItemHtml += `<tr data-item-id="${item._id.$oid}"> `
+					const d = new Date();
+					if(!item.is_done && d.toISOString() > item.deadline){ 
+						color = "#F6BBBB"
+
+					}
+
+					listItemHtml += `<tr data-item-id="${item._id.$oid}" style='background-color: ${color}' >`
 					listItemHtml += `<td><input type="checkbox" name="isDone" data-target="listController.isDone" data-action="listController#selectionItem" item-id="${item._id.$oid}" ${checked} class="custom-control-input"></td> `
 					listItemHtml += `<td><label> ${item.name} </label></td> `
 					// listItemHtml += `<td>`
@@ -55,12 +64,14 @@ export default class extends Controller {
 					// listItemHtml += `<div class="progress-bar" role="progressbar" style="width:${item.progress ? item.progress : 10}%" aria-valuenow="${item.progress ? item.progress : 10}" aria-valuemin="0" aria-valuemax="100"></div>`
 					// listItemHtml += `</div>`
 					// listItemHtml += `</td>`
-					listItemHtml += `<td style="width: 150px"> <input type="range" class="form-control-range" id="formControlRange"  min="0" max="100" item-id="${item._id.$oid}" step="25" value="${item.progress ? item.progress : 0}" data-target="listController.inputProgress" data-action="click->listController#updateProgress" </td>` 
+					listItemHtml += `<td name="inputProgress" style="width: 150px"> <input type="range" class="form-control-range" id="formControlRange"  min="0" max="100" item-id="${item._id.$oid}" step="25" value="${item.progress ? item.progress : 0}" data-target="listController.inputProgress" data-action="click->listController#updateProgress" </td>` 
 					listItemHtml += `<td name="inputCreated" item-id="${item._id.$oid}">${item.created_at ? item.created_at : ''} </td>`
 					listItemHtml += `<td name="inputAssignee" item-id="${item._id.$oid}">${item.assignee ? item.assignee : ''} </td>`
 					listItemHtml += `<td name="inputDeadline" item-id="${item._id.$oid}">${item.deadline ? item.deadline : ''} </td>`
-					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-warning btn-sm">Edit</td>`
-					listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Delete</td>`
+					listItemHtml += `<td style="text-align: center;" name="inputEstimatedTime" item-id="${item._id.$oid}">${item.estimated_time ? item.estimated_time : ''} </td>`
+					listItemHtml += `<td name="inputPriority" item-id="${item._id.$oid}">${item.priority ? item.priority : ''} </td>`
+					listItemHtml += `<td><button type="button" name="editBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-info">Details</td>`
+					// listItemHtml += `<td><button name="deleteBt" data-action="click->listController#showItemDialog" item-id="${item._id.$oid}" class="btn btn-danger btn-sm">Delete</td>`
 
 					// // Se no banco estiver true, concatena checked no html para que fique setado o checkbox
 					// if (item.is_selected) {
@@ -166,11 +177,9 @@ export default class extends Controller {
 
 	selectionItem(e){
 		var checkedValue = e.target.checked;
-
 		let item_id = e.target.getAttribute("item-id");
-
 		var url = `items/${item_id}`;
-
+		const d = new Date();
 		var data = {
 			is_done: checkedValue
 		}
@@ -188,11 +197,20 @@ export default class extends Controller {
 			return response.json()
 		})
 		.then(response =>{
+			if(response.item.is_done){
+				var color = '#E5F6BB'
+			}
+			else{
+				if (d.toISOString() > response.item.deadline){
+					var color = "#F6BBBB"
+				}else{
+					var color = 'transparent'
+				}
+			}
+			$(`#tableItems tr[data-item-id="${item_id}"]`).css('background-color', `${color}`);
 			
 		})
 	}
-
-
 
 	showGridDefault(){
 		$('#divEditList').hide()		
@@ -214,7 +232,8 @@ export default class extends Controller {
 			let data = {
 				name: this.inputNewItemNameTarget.value,
 				list_id: idListSelected,
-				created_at: created_at
+				created_at: created_at,
+				progress: 0
 			}
 
 			this.resultsTargets.forEach((tbodyRow) => {
@@ -263,8 +282,10 @@ export default class extends Controller {
 								listItemHtml += `<td item-id="${response.item._id.$oid}">${create_at} </td>`
 								listItemHtml += `<td></td>`
 								listItemHtml += `<td item-id="${response.item._id.$oid}"></td>`
-								listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="editBt" data-action="click->listController#showItemDialog" class="btn btn-warning btn-sm">Edit</td>`
-								listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="deleteBt" data-action="click->listController#showItemDialog" class="btn btn-danger btn-sm">Delete</td>`
+								listItemHtml += `<td name="inputEstimatedTime" item-id="${response.item._id.$oid}"></td>`
+								listItemHtml += `<td name="inputPriority" item-id="${response.item._id.$oid}"></td>`
+								listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="editBt" data-action="click->listController#showItemDialog" class="btn btn-info">Details</td>`
+								// listItemHtml += `<td><button item-id="${response.item._id.$oid}" type="button" name="deleteBt" data-action="click->listController#showItemDialog" class="btn btn-danger btn-sm">Delete</td>`
 								listItemHtml += `</tr>`
 
 								//console.log(this.resultsTarget.innerHTML)
@@ -292,19 +313,20 @@ export default class extends Controller {
 		var existe = false
 		
 
-		console.log(this.inputItemNameTarget.value)
-		console.log(this.inputProgressTarget.value)
-		console.log(this.inputDeadlineTarget.value)
-		console.log(this.inputPriorityTarget.value)
-		console.log(this.inputNoteTarget.value)
-		console.log(this.inputAssigneeTarget.value)
-
+		// console.log(this.inputItemNameTarget.value)
+		// console.log(this.inputProgressTarget.value)
+		// console.log(this.inputDeadlineTarget.value)
+		// console.log(this.inputPriorityTarget.value)
+		// console.log(this.inputNoteTarget.value)
+		// console.log(this.inputAssigneeTarget.value)
+		// console.log(this.inputEstimatedTimeTarget.value)
 
 
 		if (this.inputItemNameTarget.value < 1) {
 			this.showAlerts("empty", true)
 		} else {
 			this.resultsTargets.forEach((item) => {
+				console.log(item)
 				// var strong = item.querySelectorAll("strong")
 				// strong.forEach((item) => {
 				// 	if(item.innerText.toUpperCase() === this.inputItemNameTarget.value.toUpperCase()){
@@ -316,13 +338,16 @@ export default class extends Controller {
 				// } else {
 
 					var itemId = this.inputItemIdTarget.value
+					console.log(this.inputItemNameTarget.value)
+					console.log(this.inputProgressTarget.value)
 					let data = {
 						name: `${this.inputItemNameTarget.value}`,
-						// progress: `${this.inputProgressTarget.value}`,
+						progress: `${this.inputProgressTarget.value}`,
 						deadline: `${this.inputDeadlineTarget.value}`,
 						priority: `${this.inputPriorityTarget.value}`,
 						note: `${this.inputNoteTarget.value}`,
-						assignee: `${this.inputAssigneeTarget.value}`
+						assignee: `${this.inputAssigneeTarget.value}`,
+						estimated_time: `${this.inputEstimatedTimeTarget.value}`
 					}
 
 					fetch(`/items/${itemId}`,{
@@ -407,16 +432,19 @@ export default class extends Controller {
 
 	deleteItem(){
 		var itemId = this.inputItemIdTarget.value
-		fetch(`/item/${itemId}`,{
-			method: 'DELETE'
-		}).then(response =>{
-			$('#modalDeleteItem').modal('toggle');
-			//this.showAllItems()
+		var answer = window.confirm("REALLY?") // Pensar em um modal de confirmação
+		if(answer){
+			fetch(`/item/${itemId}`,{
+				method: 'DELETE'
+			}).then(response =>{
+				// $('#modalDeleteItem').modal('toggle');
+				//this.showAllItems()
 
-			//Remove a specific row 
-			$(`#tableItems tr[data-item-id="${itemId}"]`).remove()
-			this.showAlerts('delete', false)
-		})
+				//Remove a specific row 
+				$(`#tableItems tr[data-item-id="${itemId}"]`).remove()
+				this.showAlerts('delete', false)
+			})
+		}
 	}
 
 	deleteList(){
