@@ -1,0 +1,142 @@
+{"_id":{"$oid":"5d542d5eb960ba481c115d94"},"name":"Ciência de dados"}
+{"_id":{"$oid":"5fefdf61b960ba2233af795e"},"name":"Rails+Mongo - Lista de Tarefas"}
+{"_id":{"$oid":"5fefdfd5b960ba2233af7960"},"name":"Wayv - BI"}
+{"_id":{"$oid":"6005fcd3b960ba74d95d2f0a"},"name":"List task "}
+{"_id":{"$oid":"60086198b960ba3571b8d799"},"name":"Tabela - LNB"}
+{"_id":{"$oid":"60134765b960bac1e164b2da"},"name":"Dia 28/01- quinta - HE"}
+{"_id":{"$oid":"601452a5b960ba5d18939a94"},"name":"Pendências - 29/01"}
+{"_id":{"$oid":"60163a5cb960ba2f1dd2d225"},"name":"Dia 30/01 - sábado - HE"}
+{"_id":{"$oid":"6017fc09b960ba27ea3f1af8"},"name":"Reunião DEV 01/02"}
+{"_id":{"$oid":"6019af06b960ba982a832278"},"name":"Dia 01/02 - Segunda - HE"}
+{"_id":{"$oid":"601a11e7b960ba982a83227d"},"name":"Dia 02/02 - Terça - HE"}
+{"_id":{"$oid":"601b08c0b960bae08e8c6635"},"name":"Pendências 03/02"}
+{"_id":{"$oid":"601b6c6fb960bae08e8c663a"},"name":"Dia 03/02 - Quarta - HE"}
+{"_id":{"$oid":"60209d9fb960ba4b46b5323a"},"name":"Domingo - teste"}
+{"_id":{"$oid":"60221210b960baeda0ba9723"},"name":"Dia 08/02 - Segunda - HE"}
+{"_id":{"$oid":"6022bd91b960ba5938b01245"},"name":"Treinamento BI - 09/02"}
+{"_id":{"$oid":"6025f178b960baaba82847c7"},"name":"dia 11/02 - Quinta - HE"}
+{"_id":{"$oid":"60274e59b960bad056894bf4"},"name":"dia 12/02 - Sexta - HE"}
+{"_id":{"$oid":"602a7896b960ba22a667b487"},"name":"Reunião DEV 15/02"}
+{"_id":{"$oid":"602f387eb960baf994748c24"},"name":"dia 18/02 - Quinta - HE"}
+{"_id":{"$oid":"60303c57b960babc1ed5e115"},"name":"dia 19/02 - Sexta - HE"}
+{"_id":{"$oid":"6033adb3b960ba213dffbcc2"},"name":"Conversa Marlon - 22/02"}
+{"_id":{"$oid":"60370573b960bad7d8742231"},"name":"dia 24/02 - Quarta - HE"}
+{"_id":{"$oid":"603cf1cfb960ba2954f5b087"},"name":"Reunião DEV 01/03"}
+{"_id":{"$oid":"60591a3fb960ba970be45f98"},"name":"Pendências 22/03"}
+{"_id":{"$oid":"6061de60b960ba60eb7ff8b4"},"name":"Reunião DEV 29/março"}
+{"_id":{"$oid":"60636f5bb960ba17cc392d59"},"name":"Horas extras total (30-03)"}
+{"_id":{"$oid":"606b02bdb960ba1ab85774a8"},"name":"BI - Semana 05/abril"}
+{"_id":{"$oid":"606b1041b960ba1ab85774b0"},"name":"Reunião DEV 5/abril"}
+{"_id":{"$oid":"6070a983b960ba29f4a6c33a"},"name":"Reunião DEV 12/abril"}
+{"_id":{"$oid":"607433d6b960ba122bfbfe43"},"name":"BI - Semana 12/abril"}
+{"_id":{"$oid":"60759591b960ba201653e8cb"},"name":"Outros (CTBA)"}
+{"_id":{"$oid":"6079d490b960babd851e9279"},"name":"BI - Semana 19/abril"}
+{"_id":{"$oid":"607d7b95b960ba14de4e208d"},"name":"SUP - Semana 19/abril"}
+{"_id":{"$oid":"607f18e4b960ba0580b5cf54"},"name":"TCC"}
+{"_id":{"$oid":"6086bcd0b960ba166c67955a"},"name":"BI - Semana 26/abril"}
+{"_id":{"$oid":"6086bce7b960ba166c67955b"},"name":"SUP - Semana 26/abril"}
+{"_id":{"$oid":"60895077b960ba20454dd894"},"name":"Alex - Lei do Bem"}
+{"_id":{"$oid":"60899276b960ba20454dd89f"},"name":"TCC - 28/Abril"}
+{"_id":{"$oid":"60918c02b960ba4e7ef768c6"},"name":"Semana 03/maio"}
+{"_id":{"$oid":"6091921db960ba4e7ef768cf"},"name":"TCC - Regressão "}
+{"_id":{"$oid":"6091b963b960ba4e7ef768d7"},"name":"HE - Maio"}
+{"_id":{"$oid":"60992783b960ba1c03ea2942"},"name":"Semana 10/maio"}
+{"_id":{"$oid":"60a27602b960ba1cd61a28db"},"name":"Semana 17/Maio"}
+{"_id":{"$oid":"60a405e0b960ba44c4d78fae"},"name":"TCC NOVO "}
+{"_id":{"$oid":"60aba49fb960ba130a7e871d"},"name":"Semana 24/Maio"}
+{"_id":{"$oid":"60b62bccb960ba13c7570bf7"},"name":"Semana 31/Maio"}
+{"_id":{"$oid":"60be09f7b960ba1772fd312a"},"name":"07/Junho"}
+{"_id":{"$oid":"60c7455ab960ba6302a1efe7"},"name":"14/Junho"}
+{"_id":{"$oid":"60d07e08b960ba030af777cf"},"name":"21/Junho"}
+{"_id":{"$oid":"60d9ba8bb960bad40aed5b95"},"name":"28/jun"}
+{"_id":{"$oid":"60ddee82b960ba6469469ca5"},"name":"05/julho"}
+{"_id":{"$oid":"60ddf7a2b960ba6469469ca7"},"name":"UTFPR"}
+{"_id":{"$oid":"60ec2aafb960babd903ee3df"},"name":"12/Julho"}
+{"_id":{"$oid":"60f57f7db960ba5cce8834f7"},"name":"19/Julho"}
+{"_id":{"$oid":"60fea43ab960bae3868ba660"},"name":"26/Julho"}
+{"_id":{"$oid":"6107fe33b960ba1347bbd5fe"},"name":"02/agosto"}
+{"_id":{"$oid":"610c2ad2b960baee04f03b75"},"name":"Conversa UTFPR"}
+{"_id":{"$oid":"61117eb3b960ba1b24de43e2"},"name":"09/Agosto"}
+{"_id":{"$oid":"611a6545b960ba15ce6f5de4"},"name":"16/Agosto"}
+{"_id":{"$oid":"61201091b960ba1b876d99f8"},"name":"23/Agosto"}
+{"_id":{"$oid":"612cd9e6b960ba2eb3e18bc7"},"name":"30/agosto"}
+{"_id":{"$oid":"61360f6fb960baa88e79d423"},"name":"06/setembro"}
+{"_id":{"$oid":"613f4472b960ba24e690d7aa"},"name":"13/Setembro"}
+{"_id":{"$oid":"61487935b960ba306ee4038e"},"name":"20/Setembro"}
+{"_id":{"$oid":"6151bf1eb960ba24332a3431"},"name":"27/Setembro"}
+{"_id":{"$oid":"61573af5b960ba34665a2854"},"name":"04/Outubro"}
+{"_id":{"$oid":"61647a5db960baa4ea3ca1af"},"name":"11/Outubro"}
+{"_id":{"$oid":"616d6babb960bad10b0307d1"},"name":"18/Outubro"}
+{"_id":{"$oid":"6176aa41b960ba260276c7b3"},"name":"25/outubro"}
+{"_id":{"$oid":"617fe40ab960ba29d32d82d7"},"name":"01/Novembro"}
+{"_id":{"$oid":"6189123bb960ba34295d3674"},"name":"08/Novembro"}
+{"_id":{"$oid":"618eb7eab960ba599277279d"},"name":"15/Novemrbro"}
+{"_id":{"$oid":"619b8faeb960ba2bf5014b1c"},"name":"22/Novembro"}
+{"_id":{"$oid":"619fe92fb960ba9848563c9d"},"name":"Token Git"}
+{"_id":{"$oid":"61a4c6d1b960ba8dcf0b1d3c"},"name":"29/Novembro"}
+{"_id":{"$oid":"61aa5b6ab960ba0c237ba075"},"name":"06/dezembro"}
+{"_id":{"$oid":"61b73c72b960ba96c3a02880"},"name":"13/Dezembro"}
+{"_id":{"$oid":"61c078b8b960ba25edc17765"},"name":"20/Dezembro"}
+{"_id":{"$oid":"61c9ada1b960ba29bea527dd"},"name":"27/Dezembro"}
+{"_id":{"$oid":"61d2ed26b960ba2f493daa78"},"name":"03/Jan/2022"}
+{"_id":{"$oid":"61dc24c9b960bafaa1cdb94a"},"name":"10/Jan/2022"}
+{"_id":{"$oid":"61e55d7eb960ba2cd79d4deb"},"name":"17/Jan/2022"}
+{"_id":{"$oid":"61e9980ab960ba271a2a78bc"},"name":"Chamados DEV"}
+{"_id":{"$oid":"61ee963cb960ba212f7fcea7"},"name":"24/Jan/2022"}
+{"_id":{"$oid":"61f7d3a2b960ba231f8b242d"},"name":"31/Jan/2022"}
+{"_id":{"$oid":"620a3dbfb960ba33eaec3c66"},"name":"14/Fev/2022"}
+{"_id":{"$oid":"620d0908b960ba33eaec3c6e"},"name":"OBJETIVOS SQL"}
+{"_id":{"$oid":"62138e45b960ba958f5f2e6a"},"name":"21/Fev/2022"}
+{"_id":{"$oid":"621cc04db960ba9840e7b7e5"},"name":"28/fev/2022"}
+{"_id":{"$oid":"6226035ab960ba2c32442876"},"name":"07/mar/2022"}
+{"_id":{"$oid":"622f2bacb960ba21053f3e37"},"name":"14/mar/2022"}
+{"_id":{"$oid":"6238b2dcb960baad7182abaa"},"name":"21/mar/2022"}
+{"_id":{"$oid":"624ae630b960ba21fa3a0ad8"},"name":"04/Abril2022"}
+{"_id":{"$oid":"62541d55b960ba2dc8518bbf"},"name":"11/Abril/2022"}
+{"_id":{"$oid":"625d6af4b960ba95a58d54a4"},"name":"18/Abril/2022"}
+{"_id":{"$oid":"625f592db960ba95a58d54ab"},"name":"Projeto Include"}
+{"_id":{"$oid":"62669aedb960baf4423bb631"},"name":"25/Abril/2022"}
+{"_id":{"$oid":"626fd5f8b960ba2bdd8a4891"},"name":"02/Maio/2022"}
+{"_id":{"$oid":"62791a63b960ba16eb218068"},"name":"09/Maio/2022"}
+{"_id":{"$oid":"62824ebfb960baf03b5a7414"},"name":"16/Maio/2022"}
+{"_id":{"$oid":"628b7ba4b960ba2b74e4aed8"},"name":"23/Maio/2022"}
+{"_id":{"$oid":"62950eb3b960ba190d275de2"},"name":"30/Maio/2022"}
+{"_id":{"$oid":"629df541b960ba48347612e7"},"name":"06/Junho/2022"}
+{"_id":{"$oid":"629fcc26b960ba48347612f3"},"name":"HE - Junho/2022"}
+{"_id":{"$oid":"62a73b69b960ba2fddf73732"},"name":"13/Junho/2022"}
+{"_id":{"$oid":"62aa07d6b960ba1e0e741623"},"name":"Linkedin"}
+{"_id":{"$oid":"62b0677bb960ba31318bf534"},"name":"20/Junho/2022"}
+{"_id":{"$oid":"62b9a5b1b960ba6b5176c2e2"},"name":"27/Junho/2022"}
+{"_id":{"$oid":"62c2ed32b960ba28ec22dfed"},"name":"04/julho/2022"}
+{"_id":{"$oid":"62cc1002b960ba4d4c0e6cd7"},"name":"11/Julho/2022"}
+{"_id":{"$oid":"62d5529bb960ba324dda394e"},"name":"18/Julho/2022"}
+{"_id":{"$oid":"62de98ffb960ba818713daac"},"name":"25/Julho/2022"}
+{"_id":{"$oid":"62e3f165b960ba818713dabc"},"name":"01/Agosto/2022"}
+{"_id":{"$oid":"62f14352b960ba322142aab1"},"name":"08/Agosto/2022"}
+{"_id":{"$oid":"62f1b4dfb960ba322142aab2"},"name":"DNJ"}
+{"_id":{"$oid":"62fa4004b960ba4b4d759933"},"name":"15/Agosto/2022"}
+{"_id":{"$oid":"630389f0b960ba22437749b6"},"name":"22/Agosto/2022"}
+{"_id":{"$oid":"630cacd1b960ba4ac266cc2d"},"name":"29/Agosto/2022"}
+{"_id":{"$oid":"6315f9aeb960ba344bef3189"},"name":"05/Setembro/2022"}
+{"_id":{"$oid":"63207f3db960bae05414ff76"},"name":"12/Setembro/2022"}
+{"_id":{"$oid":"632360fab960bafc75c14e85"},"name":"BI"}
+{"_id":{"$oid":"632a31f4b960ba55a07ce374"},"name":"19/Setembro/2022"}
+{"_id":{"$oid":"63324fc8b960ba2a1bf06a99"},"name":"26/Setembro/2022"}
+{"_id":{"$oid":"633adebfb960ba92abc896fe"},"name":"03/Outubro/2022"}
+{"_id":{"$oid":"6344227cb960baf774856641"},"name":"10/Outubro/2022"}
+{"_id":{"$oid":"634d4fd6b960ba1eb8292e2a"},"name":"17/Outubro/2022"}
+{"_id":{"$oid":"6356bcf8b960baac62cbfaef"},"name":"24/Outubro/2022"}
+{"_id":{"$oid":"635fbcd3b960ba372e92006a"},"name":"31/Outubro/2022"}
+{"_id":{"$oid":"6368f361b960ba2ef38098db"},"name":"07/Novembro/2022"}
+{"_id":{"$oid":"637e7359b960ba55536e9db3"},"name":"21/Novembro/2022"}
+{"_id":{"$oid":"6384ab6bb960bade4ecc73f3"},"name":"28/Novembro/2022"}
+{"_id":{"$oid":"63971825b960ba26f8899771"},"name":"12/Dezembro/2022"}
+{"_id":{"$oid":"63a06570b960ba0950b02625"},"name":"19/Dezembro/2022"}
+{"_id":{"$oid":"63adcfc1b960ba2b0497100e"},"name":"26/Dezembro/2022"}
+{"_id":{"$oid":"63b30c3fb960ba38a886ed77"},"name":"02/Janeiro/2023"}
+{"_id":{"$oid":"63bc1012b960ba3a4bb8c975"},"name":"09/Janeiro/2023"}
+{"_id":{"$oid":"63c55d48b960ba3331b0ac2f"},"name":"16/Jan/2023"}
+{"_id":{"$oid":"63cec72bb960ba3397ce3658"},"name":"23/Janeiro/2023"}
+{"_id":{"$oid":"63d7b524b960ba3397ce365c"},"name":"30/Janeiro/2023"}
+{"_id":{"$oid":"63e0fcc9b960ba3a4433665b"},"name":"06/Fevereiro/2023"}
+{"_id":{"$oid":"63f35fa1b960ba531aa3beeb"},"name":"20/Fevereiro/2023"}
